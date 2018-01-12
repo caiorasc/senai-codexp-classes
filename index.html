@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <main style="padding: 40px">
-        <div class="container">
-            <p>You have 3 items in your order</p>
+    <main class="container-fluid">
+        <div class="container-fluid cart-message">
+            <span>You have
+                <span>3</span> items in your order</span>
         </div>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -29,6 +31,16 @@
 
                 </tbody>
             </table>
+            <div class="container-fluid subtotal text-right">
+                <span>Subtotal: </span>
+                <span>$523</span>
+            </div>
+            <div class="container-fluid">
+                <div class="convert-row">
+                    <a class="ok" href="#">Continue Shopping</a>
+                    <a class="btn btn-success" href="#">Shopping info</a>
+                </div>
+            </div>
         </div>
     </main>
 

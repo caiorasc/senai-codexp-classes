@@ -16,7 +16,6 @@ var products = [
         color: "#e48544",
         size: "43",
         img: "img/img-02.jpg"
-        
     },
     {
         name: "DC Men's Axis Snowboard Jacket",
@@ -36,13 +35,12 @@ for(var i = 0; i < products.length; i++){
     listProducts += '<tr><td> <div class="product-description"> <img class="img-responsive" src="' + products[i].img + '"</img>';
     listProducts += '<div class="box-description">' +products[i].name;
 
-    listProducts += '<div class="box-size"><span>size:</span><div class="color-box" style="background: ' + products[i].color + '";</div></div></div></div></td>';
+    listProducts += '<div class="box-size"><div>size:</div><div class="color-box" style="background: ' + products[i].color + '";</div></div></div></div></td>';
     
-    listProducts += '<td><div class="box">' + products[i].price + '</div></td>';
-    listProducts += '<td><div class="box">' + products[i].qtd + '</div></td>';
-    listProducts += '<td><div class="box">' + products[i].total + '</div></td>';
+    listProducts += '<td class="align-middle">' + products[i].price + ' </td>';
+    listProducts += '<td class="align-middle">' + products[i].qtd + ' </td>';
+    listProducts += '<td class="align-middle">' + products[i].total + ' </td>';
     listProducts += '</tr>';
 }
-
 
 productsPlace.innerHTML = listProducts;
