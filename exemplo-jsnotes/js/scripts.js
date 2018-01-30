@@ -1,5 +1,7 @@
 var notas = [];
 
+var section = Document.getElementById('');
+
 var nota = {
     listaInterna: [],
 
