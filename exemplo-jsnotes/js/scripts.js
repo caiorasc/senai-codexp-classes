@@ -1,5 +1,31 @@
 var notas = [];
 
+var nota = {
+    listaInterna: [],
+
+    adiciona: function(novoTitulo, novoTexto){
+        var nota = {
+            titulo: novoTitulo,
+            texto: novoTexto,
+            editando: false
+        };
+
+        this.listaInterna.push(nota);
+    },
+    remove: function(posicao){
+        this.listaInterna.splice(posicao, 1);
+    },
+    edita: function(posicao){
+        this.listaInterna[posicao].editando = true;
+    },
+    salva: function(posicao, novoTitulo, novoTexto){
+        this.listaInterna[posicao].titulo = novoTitulo,
+        this.listaInterna[posicao].texto = novoTexto,
+        this.listaInterna[posicao].editando = false;
+    }
+}
+
+
 function atualizarSecao(secao) {
     var conteudoSecao = "";
 
@@ -15,7 +41,7 @@ function atualizarSecao(secao) {
                 '</form>';
         } else {
             conteudoSecao += '<form class="note" onclick="editarFormulario(' + posicao + ', this.parentElement)">' +
-                '<button class="note__control" type="button" onclick="removerNota(' + posicao + ', this.form.parentElement)">' +
+                '<button class="note__control" type="button" onclick="removerNota(event, ' + posicao + ', this.form.parentElement)">' +
                 '<i class="fa fa-times" aria-hidden="true"></i>' +
                 '</button>' +
                 '<h1 class="note__title">' + notas[posicao].titulo + '</h1>' +
@@ -28,7 +54,8 @@ function atualizarSecao(secao) {
 
 function editarFormulario(posicao, secao) {
     notas[posicao].editando = true;
-    atualizarSecao(secao);
+
+    // atualizarSecao(secao);
 }
 
 function adicionarNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
@@ -37,7 +64,7 @@ function adicionarNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
         notas[posicao].texto = textareaTexto.value,
         notas[posicao].editando = false;
         
-        atualizarSecao(secao);
+        // atualizarSecao(secao);
 
     } else {
         var nota = {
@@ -48,14 +75,16 @@ function adicionarNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
 
         notas.push(nota);
 
-        atualizarSecao(secao);
+        // atualizarSecao(secao);
 
         formulario.reset();
     }
 }
 
-function removerNota(posicao, secao) {
+function removerNota(event, posicao, secao) {
+    event.stopPropagation();
+
     notas.splice(posicao, 1);
 
-    atualizarSecao(secao);
+    // atualizarSecao(secao);
 }

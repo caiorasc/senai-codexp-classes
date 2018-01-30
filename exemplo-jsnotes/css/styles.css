@@ -48,6 +48,7 @@
     border: 0;
     background: rgb(255, 246, 141);
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .notes {
