@@ -1,38 +1,40 @@
+"use strict";
+
 var nota = {
     secao: document.getElementsByClassName('notes')[0],
     listaInterna: [],
 
-    adiciona: function (novoTitulo, novoTexto) {
+    adiciona: function adiciona(novoTitulo, novoTexto) {
         var nota = {
             titulo: novoTitulo,
             texto: novoTexto,
             editando: false
         };
 
-        this.listaInterna.push(nota);
+        undefined.listaInterna.push(nota);
 
-        atualizarSecao(this.secao);
+        atualizarSecao(undefined.secao);
     },
-    remove: function (posicao) {
-        this.listaInterna.splice(posicao, 1);
+    remove: function remove(posicao) {
+        undefined.listaInterna.splice(posicao, 1);
 
-        atualizarSecao(this.secao);
+        atualizarSecao(undefined.secao);
     },
-    edita: function (posicao) {
-        this.listaInterna[posicao].editando = true;
+    edita: function edita(posicao) {
+        undefined.listaInterna[posicao].editando = true;
 
-        atualizarSecao(this.secao);
+        atualizarSecao(undefined.secao);
     },
-    salva: function (posicao, novoTitulo, novoTexto) {
-        this.listaInterna[posicao].titulo = novoTitulo, this.listaInterna[posicao].texto = novoTexto, this.listaInterna[posicao].editando = false;
+    salva: function salva(posicao, novoTitulo, novoTexto) {
+        undefined.listaInterna[posicao].titulo = novoTitulo, undefined.listaInterna[posicao].texto = novoTexto, undefined.listaInterna[posicao].editando = false;
 
-        atualizarSecao(this.secao);
+        atualizarSecao(undefined.secao);
     },
-    pega: function (posicao) {
-        return this.listaInterna[posicao];
+    pega: function pega(posicao) {
+        return undefined.listaInterna[posicao];
     },
-    contaTotal: function () {
-        return this.listaInterna.length;
+    contaTotal: function contaTotal() {
+        return undefined.listaInterna.length;
     }
 };
 
@@ -44,9 +46,9 @@ function atualizarSecao(secao) {
 
         if (notaAtual.editando) {
             //criar variavel para guardar o html de todas as nota.listaInterna que estão aparecendo na tela
-            conteudoSecao += '<form class="note">' + '<input class="note__title" type="text" name="titulo" value="' + notaAtual.titulo + '" placeholder="Título">' + '<textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">' + notaAtual.texto + '</textarea>' + '<button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, ' + posicao + ')">' + 'Concluído' + '</button>' + '</form>';
+            conteudoSecao += "<form class=\"note\">\n                <input class=\"note__title\" type=\"text\" name=\"titulo\" value=\" " + notaAtual.titulo + " \" placeholder=\"T\xEDtulo\">\n                <textarea class=\"note__body\" name=\"texto\" rows=\"5\" placeholder=\"Criar uma nota...\">" + notaAtual.texto + "</textarea>\n                <button class=\"note__control\" type=\"button\" onclick=\"adicionarNota(this.form.titulo, this.form.texto, this.form, " + posicao + ")\">\n                Conclu\xEDdo\n                </button>\n                </form>";
         } else {
-            conteudoSecao += '<form class="note" onclick="editarFormulario(' + posicao + ', this.parentElement)">' + '<button class="note__control" type="button" onclick="removerNota(event, ' + posicao + ')">' + '<i class="fa fa-times" aria-hidden="true"></i>' + '</button>' + '<h1 class="note__title">' + notaAtual.titulo + '</h1>' + '<p class="note__body">' + notaAtual.texto + '</p>' + '</form>';
+            conteudoSecao += "<form class=\"note\" onclick=\"editarFormulario( " + posicao + ", this.parentElement)\">\n                <button class=\"note__control\" type=\"button\" onclick=\"removerNota(event, " + posicao + ")\">\n                <i class=\"fa fa-times\" aria-hidden=\"true\"></i>\n                </button>\n                <h1 class=\"note__title\"> " + notaAtual.titulo + "</h1>\n                <p class=\"note__body\"> " + notaAtual.texto + " </p>\n                </form>";
         }
     }
     secao.innerHTML = conteudoSecao;

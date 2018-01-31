@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.6.1"
   }
 }

@@ -2,7 +2,7 @@ var nota = {
     secao: document.getElementsByClassName('notes')[0],
     listaInterna: [],
 
-    adiciona: function(novoTitulo, novoTexto){
+    adiciona: (novoTitulo, novoTexto) => {
         var nota = {
             titulo: novoTitulo,
             texto: novoTexto,
@@ -13,27 +13,27 @@ var nota = {
         
         atualizarSecao(this.secao);
     },
-    remove: function(posicao){
+    remove: (posicao) => {
         this.listaInterna.splice(posicao, 1);
 
         atualizarSecao(this.secao);
     },
-    edita: function(posicao){
+    edita: (posicao) => {
         this.listaInterna[posicao].editando = true;
 
         atualizarSecao(this.secao);
     },
-    salva: function(posicao, novoTitulo, novoTexto){
+    salva: (posicao, novoTitulo, novoTexto) => {
         this.listaInterna[posicao].titulo = novoTitulo,
         this.listaInterna[posicao].texto = novoTexto,
         this.listaInterna[posicao].editando = false;
 
         atualizarSecao(this.secao);
     },
-    pega: function(posicao){
+    pega: (posicao) => {
         return this.listaInterna[posicao];
     },
-    contaTotal: function(){
+    contaTotal: () => {
         return this.listaInterna.length;
     }
 };
