@@ -1,0 +1,15 @@
+{
+  "name": "post-it-es6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrips.js",
+  "scripts": {
+    "build": "babel js -d lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
