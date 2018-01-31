@@ -39,7 +39,7 @@ var nota = {
 };
 
 
-function atualizarSecao(secao) {
+const atualizarSecao = (secao) => {
     var conteudoSecao = "";
 
     for (var posicao = 0; posicao < nota.contaTotal(); posicao++) {
@@ -67,11 +67,11 @@ function atualizarSecao(secao) {
     secao.innerHTML = conteudoSecao;
 }
 
-function editarFormulario(posicao) {
+const editarFormulario = (posicao) => {
     nota.edita(posicao);    
 }
 
-function adicionarNota(InputTitulo, InputareTexto, formulario, posicao) {
+const adicionarNota = (InputTitulo, InputareTexto, formulario, posicao) => {
     if (nota.pega(posicao)) {
         nota.salva(posicao, InputTitulo.value, InputareTexto.value);
 
@@ -82,7 +82,7 @@ function adicionarNota(InputTitulo, InputareTexto, formulario, posicao) {
     }
 }
 
-function removerNota(posicao) {
+const removerNota = (posicao) => {
     event.stopPropagation();
 
     nota.remove(posicao);
