@@ -1,38 +1,70 @@
 "use strict";
 
-var listaNotas = {
-    secao: document.getElementsByClassName("notes")[0],
-    listaInterna: [],
-    adiciona: function adiciona(novoTitulo, novoTexto) {
-        var nota = {
-            titulo: novoTitulo,
-            texto: novoTexto,
-            editando: false
-        };
-        this.listaInterna.push(nota);
-        atualizarSecao(this.secao);
-    },
-    remove: function remove(posicao) {
-        this.listaInterna.splice(posicao, 1);
-        atualizarSecao(this.secao);
-    },
-    edita: function edita(posicao) {
-        this.listaInterna[posicao].editando = true;
-        atualizarSecao(this.secao);
-    },
-    salva: function salva(posicao, novoTitulo, novoTexto) {
-        this.listaInterna[posicao].titulo = novoTitulo;
-        this.listaInterna[posicao].texto = novoTexto;
-        this.listaInterna[posicao].editando = false;
-        atualizarSecao(this.secao);
-    },
-    pega: function pega(posicao) {
-        return this.listaInterna[posicao]; //Não esquecer do return quando migrar o arrow function para método
-    },
-    contaTotal: function contaTotal() {
-        return this.listaInterna.length; //Não esquecer do return quando migrar o arrow function para método
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ListaNotas = function () {
+    function ListaNotas(secao, lista) {
+        _classCallCheck(this, ListaNotas);
+
+        this.secao = secao;
+        this.listaInterna = lista;
     }
-};
+
+    // secao: document.getElementsByClassName("notes")[0],
+    // listaInterna: [],
+
+
+    _createClass(ListaNotas, [{
+        key: "adiciona",
+        value: function adiciona(novoTitulo, novoTexto) {
+            var nota = {
+                titulo: novoTitulo,
+                texto: novoTexto,
+                editando: false
+            };
+            this.listaInterna.push(nota);
+            atualizarSecao(this.secao);
+        }
+    }, {
+        key: "remove",
+        value: function remove(posicao) {
+            this.listaInterna.splice(posicao, 1);
+            atualizarSecao(this.secao);
+        }
+    }, {
+        key: "edita",
+        value: function edita(posicao) {
+            this.listaInterna[posicao].editando = true;
+            atualizarSecao(this.secao);
+        }
+    }, {
+        key: "salva",
+        value: function salva(posicao, novoTitulo, novoTexto) {
+            this.listaInterna[posicao].titulo = novoTitulo;
+            this.listaInterna[posicao].texto = novoTexto;
+            this.listaInterna[posicao].editando = false;
+            atualizarSecao(this.secao);
+        }
+    }, {
+        key: "pega",
+        value: function pega(posicao) {
+            return this.listaInterna[posicao]; //Não esquecer do return quando migrar o arrow function para método
+        }
+    }, {
+        key: "contaTotal",
+        value: function contaTotal() {
+            return this.listaInterna.length; //Não esquecer do return quando migrar o arrow function para método
+        }
+    }]);
+
+    return ListaNotas;
+}();
+
+;
+
+var listaNotas = new ListaNotas(document.getElementsByClassName("notes")[0], []);
 
 var atualizarSecao = function atualizarSecao(secao) {
     var conteudoSecao = "";
