@@ -4,7 +4,7 @@
   "description": "",
   "main": "scrips.js",
   "scripts": {
-    "build": "babel js -d lib",
+    "build": "babel js -d lib --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
