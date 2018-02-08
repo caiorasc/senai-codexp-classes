@@ -74,9 +74,17 @@ var _listaNotas = __webpack_require__(1);
 
 var _listaNotas2 = _interopRequireDefault(_listaNotas);
 
+var _formNotas = __webpack_require__(3);
+
+var _formNotas2 = _interopRequireDefault(_formNotas);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var secao = document.getElementsByClassName('notes')[0];
+// import FormInput from './componentes/formInput.js';
+// import FormTextarea from './componentes/formTextarea.js';
+// import FormButton from './componentes/formButton.js';
+
 
 var observaMudancasNaLista = function observaMudancasNaLista() {
     atualizarSecao(secao);
@@ -85,46 +93,26 @@ var observaMudancasNaLista = function observaMudancasNaLista() {
 var listaNotas = new _listaNotas2.default(observaMudancasNaLista);
 
 window.atualizarSecao = function (secao) {
-    var conteudoSecao = "";
-
-    var _loop = function _loop(posicao) {
-        var notaAtual = listaNotas.pega(posicao);
-        if (notaAtual.editando) {
-            var formularioNotas = document.createElement('form');
-            formularioNotas.setAttribute('class', 'note');
-
-            var inputTitle = document.createElement('input');
-            inputTitle.setAttribute('class', 'note__title');
-            inputTitle.setAttribute('type', 'text');
-            inputTitle.setAttribute('name', 'titulo');
-            inputTitle.setAttribute('value', notaAtual.titulo);
-            inputTitle.setAttribute('placeholder', 'titulo');
-
-            var textareaTexto = document.createElement('textarea');
-            textareaTexto.setAttribute('class', 'note__body');
-            textareaTexto.setAttribute('name', 'texto');
-            textareaTexto.setAttribute('rows', '5');
-            textareaTexto.setAttribute('placeholder', 'Criar uma nota...');
-            textareaTexto.innerHTML = notaAtual.texto;
-
-            var botaoConcluido = document.createElement('button');
-            botaoConcluido.setAttribute('class', 'note__control');
-            botaoConcluido.setAttribute('type', 'button');
-            botaoConcluido.addEventListener('click', function (event) {
-                adicionaNota(formularioNotas, inputTitle, textareaTexto, posicao);
-            });
-
-            conteudoSecao += '<form class="note">\n                                 <input class="note__title" type="text" name="titulo" value="' + notaAtual.titulo + '" placeholder="T\xEDtulo">\n                                 <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">' + notaAtual.texto + '</textarea>\n                                 <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, ' + posicao + ')">\n                                     Conclu\xEDdo\n                                 </button>\n                               </form>';
-        } else {
-            conteudoSecao += '<form class="note" onclick="editaFormulario(' + posicao + ')">\n                                 <button class="note__control" type="button" onclick="removerNota(event, ' + posicao + ')">\n                                     <i class="fa fa-times" aria-hidden="true"></i>\n                                 </button>\n                                 <h1 class="note__title">' + notaAtual.titulo + '</h1>\n                                 <p class="note__body">' + notaAtual.texto + '</p>\n                               </form>';
-        }
-    };
-
-    for (var posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
-        _loop(posicao);
+    //let conteudoSecao = "";
+    while (secao.firstChild) {
+        secao.removeChild(secao.firstChild);
     }
 
-    secao.innerHTML = conteudoSecao;
+    for (var posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
+        var notaAtual = listaNotas.pega(posicao);
+        // if (notaAtual.editando) {
+        var props = {
+            notaAtual: notaAtual,
+            posicao: posicao,
+            adicionarNota: adicionarNota,
+            editaFormulario: editaFormulario,
+            removerNota: removerNota
+        };
+
+        var formNotas = new _formNotas2.default(props);
+
+        secao.appendChild(formNotas);
+    }
 };
 
 window.editaFormulario = function (posicao) {
@@ -284,6 +272,183 @@ var Nota = function () {
 ;
 
 exports.default = Nota;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _form = __webpack_require__(4);
+
+var _form2 = _interopRequireDefault(_form);
+
+var _formInput = __webpack_require__(5);
+
+var _formInput2 = _interopRequireDefault(_formInput);
+
+var _formTextarea = __webpack_require__(6);
+
+var _formTextarea2 = _interopRequireDefault(_formTextarea);
+
+var _formButton = __webpack_require__(7);
+
+var _formButton2 = _interopRequireDefault(_formButton);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormNotas = function FormNotas(props) {
+
+    var textareaTexto = new _formTextarea2.default({
+        className: 'note__body',
+        name: 'texto',
+        value: props.notaAtual.texto,
+        rows: '5',
+        placeholder: 'Criar uma nota...',
+        readonly: !props.notaAtual.editando
+    });
+
+    var formInput = new _formInput2.default({
+        className: 'note__title',
+        type: 'text',
+        name: 'titulo',
+        value: props.notaAtual.titulo,
+        placeholder: 'Título',
+        readonly: !props.notaAtual.editando
+    });
+
+    var buttonConcluido = new _formButton2.default({
+        className: 'note__control',
+        type: 'button',
+        value: props.notaAtual.editando == true ? 'Conluído' : '<i class="fa fa-times" aria-hidden="true"></i>',
+        click: props.notaAtual.editando == true ? function () {
+            return adicionarNota(formInput, textareaTexto, formNotas, props.posicao);
+        } : function (evento) {
+            return removerNota(evento, props.posicao);
+        }
+    });
+
+    var formNotas = new _form2.default({
+        className: 'note',
+        click: props.notaAtual.editando == true ? function () {} : function () {
+            return editaFormulario(props.posicao);
+        },
+        children: props.notaAtual.editando == true ? [formInput, textareaTexto, buttonConcluido] : [buttonConcluido, formInput, textareaTexto]
+    });
+
+    return formNotas;
+};
+
+exports.default = FormNotas;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Form = function Form(props) {
+    var form = document.createElement('form');
+    form.setAttribute('class', props.className);
+
+    for (var i = 0; i < props.children.length; i++) {
+        form.appendChild(props.children[i]);
+    }
+
+    form.addEventListener("click", props.click);
+
+    return form;
+};
+
+exports.default = Form;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var FormInput = function FormInput(props) {
+    var formInput = document.createElement('input');
+
+    formInput.setAttribute('class', props.className);
+    formInput.setAttribute('type', props.type);
+    formInput.setAttribute('name', props.name);
+    formInput.setAttribute('value', props.value);
+    formInput.setAttribute('placeholder', props.placeholder);
+
+    if (props.readonly) {
+        formInput.setAttribute('readonly', true);
+    }
+
+    return formInput;
+};
+
+exports.default = FormInput;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var FormTextarea = function FormTextarea(props) {
+    var formTextarea = document.createElement('textarea');
+    formTextarea.setAttribute('class', props.className);
+    formTextarea.setAttribute('name', props.name);
+    formTextarea.setAttribute('rows', props.rows);
+    formTextarea.setAttribute('placeholder', props.placeholder);
+
+    if (props.readonly) {
+        formTextarea.setAttribute('readonly', true);
+    }
+
+    formTextarea.innerHTML = props.value;
+
+    return formTextarea;
+};
+
+exports.default = FormTextarea;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var FormButton = function FormButton(props) {
+    var formButton = document.createElement('button');
+    formButton.setAttribute('class', props.className);
+    formButton.setAttribute('type', props.type);
+
+    formButton.addEventListener('click', props.click);
+    formButton.innerHTML = props.value;
+
+    return formButton;
+};
+
+exports.default = FormButton;
 
 /***/ })
 /******/ ]);
