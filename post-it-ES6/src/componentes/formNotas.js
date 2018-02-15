@@ -53,36 +53,34 @@ const criaComponentButtonConcluido = (adionarNota, posicao, notaAlterada) => {
     const props = {
         className: 'note__control',
         type: 'button',
-        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.text, event.target.form, posicao);
+        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, posicao)
     }
-    const children = 'concluido';
+    const children = 'Concluido';
 
     return React.createElement(FormButton, props, children);
 }
 
-
-const FormNotas = (props) => {
-    let notaAlterada = new Nota(props.notaAtual.titulo, props.notaAtual.texto, props.notaAtual.editando);
+const FormNotas = ({ notaAtual, posicao, adicionarNota, removerNota, editarFormulário }) => {
+    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando);
     let formNotas;
 
     let inputTitulo = criaComponenteInputTitulo(notaAlterada);
     let formTextarea = criaComponenteFormTextarea(notaAlterada);
 
-    formProps = {
-        className: 'note',
-    };
-
+    let props = { className: 'note' };
     let children;
-    let onClick;
 
-    if (props.notaAtual.editando){
-        let buttonRemover = criaComponentButtonRemover(props.removerNota, props.posicao);
-        let buttonConcluido = criaComponentButtonConcluido(props.adicionarNota, props.posicao, notaAlterada);
+    if (notaAlterada.editando){
+        let buttonRemover = criaComponentButtonRemover(removerNota, posicao);
+        let buttonConcluido = criaComponentButtonConcluido(adicionarNota, posicao, notaAlterada);
+
+        children = [buttonRemover, inputTitulo, formTextarea, buttonConcluido];
+    } else {
+        children = [inputTitulo, formTextarea];
+        props.onClick = () => editarFormulário(posicao);
     }
 
-    formNotas = React.createElement(form, formProps, children);
-
-    return formNotas;
+    return React.createElement(form, props, children);
 }
 
 export default FormNotas;
