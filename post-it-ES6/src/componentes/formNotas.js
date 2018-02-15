@@ -1,44 +1,88 @@
 
-import Form from './form.js';
-import FormInput from './formInput.js';
-import FormTextarea from './formTextarea.js';
-import FormButton from './formButton.js';
+import React from 'react'
+import Form from './form'
+import FormInput from './formInput'
+import FormTextarea from './formTextarea'
+import FormButton from './formButton'
+import Nota from '../nota'
 
-const FormNotas = (props) => {
-
-    let textareaTexto = new FormTextarea({
-        className: 'note__body',
-        name: 'texto',
-        value: props.notaAtual.texto,
-        rows: '5',
-        placeholder: 'Criar uma nota...',
-        readonly: !props.notaAtual.editando 
-    });
-
-    let formInput = new FormInput({
+const criaComponenteInputTitulo = (notaAlterada) => {
+    const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
-        value: props.notaAtual.titulo,
         placeholder: 'Título',
-        readonly: !props.notaAtual.editando 
-    });
-    
-    let buttonConcluido = new FormButton({
+        readonly: !props.notaAlterada.editando,
+        defaultValue: notaAlterada.titulo,
+        onChange: event => {
+            notaAlterada.titulo = event.target.value;
+        }
+    }
+    return React.createElement(FormInput, props);
+}
+
+const criaComponentFormTextarea = (notaAlterada) => {
+    const props = {
+        className: 'note__body',
+        name: 'texto',
+        rows: '5',
+        placeholder: 'Criar uma nota...',
+        readonly: !props.notaAlterada.editando,
+        defaultValue: notaAlterada.texto,
+        onChange: event => {
+            notaAlterada.texto = event.target.value;
+        }
+    }
+    return React.createElement(FormTextarea, props);
+}
+
+const criaComponentButtonRemover = (removerNota, posicao) => {
+    const props = {
         className: 'note__control',
         type: 'button',
-        value: props.notaAtual.editando == true ? 'Conluído':'<i class="fa fa-times" aria-hidden="true"></i>',
-        click: props.notaAtual.editando == true ? () => adicionarNota(formInput, textareaTexto, formNotas, props.posicao):(evento) => removerNota(evento, props.posicao)
-    });
+        click: event => props.remover(event, posicao)
+    }
+    const children = {
+         className: 'fa fa-times',
+         'aria-hidden': true
+    }
+    return React.createElement(FormButton, props, children);
+}
 
-    let formNotas = new Form({
+const criaComponentButtonConcluido = (adionarNota, posicao, notaAlterada) => {
+    const props = {
+        className: 'note__control',
+        type: 'button',
+        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.text, event.target.form, posicao);
+    }
+    const children = 'concluido';
+
+    return React.createElement(FormButton, props, children);
+}
+
+
+const FormNotas = (props) => {
+    let notaAlterada = new Nota(props.notaAtual.titulo, props.notaAtual.texto, props.notaAtual.editando);
+    let formNotas;
+
+    let inputTitulo = criaComponenteInputTitulo(notaAlterada);
+    let formTextarea = criaComponenteFormTextarea(notaAlterada);
+
+    formProps = {
         className: 'note',
-        click: props.notaAtual.editando == true ? () => { } : () => editaFormulario(props.posicao), 
-        children: props.notaAtual.editando == true ? [formInput, textareaTexto, buttonConcluido]:[buttonConcluido, formInput, textareaTexto] 
-    });
+    };
+
+    let children;
+    let onClick;
+
+    if (props.notaAtual.editando){
+        let buttonRemover = criaComponentButtonRemover(props.removerNota, props.posicao);
+        let buttonConcluido = criaComponentButtonConcluido(props.adicionarNota, props.posicao, notaAlterada);
+    }
+
+    formNotas = React.createElement(form, formProps, children);
 
     return formNotas;
-
 }
 
 export default FormNotas;
