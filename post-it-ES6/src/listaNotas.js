@@ -8,18 +8,18 @@ class ListaNotas {
      adiciona(novoTitulo, novoTexto) {
         let nota = new Nota(novoTitulo, novoTexto);
         this._listaInterna.push(nota);
-        this._observador();
+        this._observador(this);
      }
  
      remove(posicao) {
         this._listaInterna.splice(posicao, 1);
-        this._observador();
+        this._observador(this);
      }
  
      edita(posicao) {
         
         this._listaInterna[posicao].editando = true;
-        this._observador();
+        this._observador(this);
      }
  
      salva(posicao, novoTitulo, novoTexto) {
@@ -27,7 +27,7 @@ class ListaNotas {
         this._listaInterna[posicao].titulo = novoTitulo;
         this._listaInterna[posicao].texto = novoTexto;
         this._listaInterna[posicao].editando = false;
-        this._observador();
+        this._observador(this);
      }
  
      pega(posicao) {

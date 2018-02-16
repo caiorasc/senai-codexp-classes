@@ -2,10 +2,10 @@ import React from 'react';
 import Section from './section'
 import FormNotas from './formNotas'
 
-const criarFormNotas = (posicao, notaAtual, removerNota, adicionarNota, editaFormulario) => {
+const montaUmFormNotas = (posicao, listaNotas, removerNota, adicionarNota, editaFormulario) => {
     props = {
         posicao: posicao,
-        notaAtual: notaAtual,
+        notaAtual: listaNotas.pega(posicao),
         removerNota: removerNota,
         adicionarNota: adicionarNota,
         editaFormulario: editaFormulario
@@ -15,15 +15,7 @@ const criarFormNotas = (posicao, notaAtual, removerNota, adicionarNota, editaFor
 
 const SecaoNotas = ({ listaNotas, removerNota, adicionarNota, editaFormulario }) => {
     const props = { className: 'notes' };
-    const children = [];
-
-    for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
-        let notaAtual = listaNotas.pega(posicao);
-
-        let formNotas = criarFormNotas(posicao, notaAtual, removerNota, adicionarNota, editaFormulario);
-
-        children.push(formNotas);
-    }
+    const children = listaNotas.map((notaAtual, posicao) => montaUmFormNotas(posicao, listaNotas, removerNota, adicionarNota, editaFormulario));
     
     return React.createElement(Section, props, children);
 }
