@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom'
 import Pagina from './componentes/pagina'
 
 ReactDOM.render(
-    react.creatElement(Pagina, null), 
+    <Pagina/>,        
     document.getElementById('root')
 )

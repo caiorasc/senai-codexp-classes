@@ -1,3 +1,9 @@
 import React from 'react'
 
-export default (props, children) => React.createElement('button', props, children)
+const FormButton = ({ children, ...props }) => (
+    <button {...props}>
+        {children}
+    </button>
+)
+
+export default FormButton

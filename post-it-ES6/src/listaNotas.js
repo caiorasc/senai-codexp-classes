@@ -31,8 +31,11 @@ class ListaNotas {
      }
  
      pega(posicao) {
-        
         return this._listaInterna[posicao];
+     }
+     
+     pegaTodos(){
+         return this._listaInterna;
      }
  
      contaTotal() {

@@ -1,3 +1,5 @@
 import React from 'react'
 
-export default props => React.createElement('input', props)
+const FormInput = props => <input {...props} />
+
+export default FormInput

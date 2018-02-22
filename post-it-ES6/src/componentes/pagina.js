@@ -6,36 +6,45 @@ import SecaoNotas from './secaoNotas'
 
 const montaFormNotas = (adicionarNota, removerNota, editaFormulario) => {
     const props = {
+        key: 'form-note',
         notaAtual: new Nota('', ''),
         adicionarNota, //adicionarNota: adicionarNota
         removerNota, //removerNota: removerNota
         editaFormulario
     }
-    return React.createElement(FormNotas, props);
+
+    return React.createElement(FormNotas, props)
 }
 
 const montaSecaoNotas = (listaNotas, adicionarNota, removerNota, editaFormulario) => {
     const props = {
+        key: 'section-notes',
         listaNotas,
         adicionarNota,
         removerNota,
         editaFormulario
     }
-    return React.createElement(SectionNotas, props)
+
+    return React.createElement(SecaoNotas, props)
 }
 
 class Pagina extends React.Component {
     constructor(props) {
         super(props);
-        // this.atualizaPagina = this.atualizaPagina.bind(this);
+        this.atualizaPagina = this.atualizaPagina.bind(this)
+        this.editaFormulario = this.editaFormulario.bind(this)
+        this.adicionarNota = this.adicionarNota.bind(this)
+        this.removerNota = this.removerNota.bind(this)
+
         this.state = {
             listaNotas: new ListaNotas(this.atualizaPagina)
         }
     }
 
-    atualizaPagina(listaNotas) {
-        console.log('quem é this: ', this);
-        this.setState({ listaNotas: novaLista });
+    atualizaPagina(novaLista) {
+        this.setState({ 
+            listaNotas: novaLista 
+        });
     }
 
     editaFormulario(posicao) {
@@ -62,9 +71,12 @@ class Pagina extends React.Component {
         let formNotas = montaFormNotas(this.adicionarNota, this.removerNota, this.editaFormulario);
         let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.removerNota, this.editaFormulario);
 
-        const children = [formNotas, secaoNotas];
-
-        return React.creatElement('main', props, children)
+        return (
+            <main {...props}>
+                {formNotas}
+                {secaoNotas}
+            </main>
+        )
     }
 }
 
